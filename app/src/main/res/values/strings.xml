@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">CustomerManager</string>
+    <string name="login">Login</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="welcome">WELCOME</string>
+    <string name="message">messege</string>
+    <string name="category">category</string>
+    <string name="news">news</string>
+    <string name="content">Content</string>
+    <string name="accountant_department">Accountant Department</string>
+    <string name="it_center">IT Center</string>
+    <string name="call_center">Call Center</string>
+    <string name="id">ID:</string>
+    <string name="register">REGISTER</string>
+    <string name="full_name">Full Name</string>
+    <string name="department">Department</string>
+    <string name="job">job</string>
+    <string name="Contract">End Contract Year</string>
+    <string name="new_customer">New Customer</string>
+    <string name="publish_news">Publish News</string>
+</resources>
