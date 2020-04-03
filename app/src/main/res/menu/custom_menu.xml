@@ -8,4 +8,8 @@
         android:id="@+id/publish"
         android:title="@string/publish_news"/>
 
+    <item
+        android:id="@+id/logout"
+        android:title="logout"/>
+
 </menu>

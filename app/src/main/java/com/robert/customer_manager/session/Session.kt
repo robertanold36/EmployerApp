@@ -5,4 +5,5 @@ interface Session {
    fun onSuccess()
    fun onEmpty()
    fun onFail()
+   fun onLogout()
 }

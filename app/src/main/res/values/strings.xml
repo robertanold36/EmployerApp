@@ -19,4 +19,26 @@
     <string name="Contract">End Contract Year</string>
     <string name="new_customer">New Customer</string>
     <string name="publish_news">Publish News</string>
+    <string name="todo">TODO</string>
+    <string-array name="departments">
+        <item>IT SUPPORT</item>
+        <item>HEALTH CENTER</item>
+        <item>CUSTOMER CENTER</item>
+        <item>BUSINESS</item>
+    </string-array>
+
+    <string-array name="job">
+        <item>PROGRAMMER</item>
+        <item>CYBER SECURITY</item>
+        <item>NURSE</item>
+        <item>DOCTOR</item>
+        <item>CUSTOMER CARE</item>
+        <item>CALLER</item>
+        <item>SALE</item>
+        <item>ACCOUNTANT</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="congratulation">Congratulation Now You Assign New Customer</string>
 </resources>

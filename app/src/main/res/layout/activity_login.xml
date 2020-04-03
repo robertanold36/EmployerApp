@@ -7,12 +7,14 @@
     <data>
         <variable
             name="loginViewModel"
-            type="com.robert.customer_manager.viewModel.UserViewModel"/>
+            type="com.robert.customer_manager.ui.login.UserViewModel"/>
     </data>
+
  <ScrollView
      android:layout_width="match_parent"
      android:layout_height="match_parent"
-     tools:context="com.robert.customer_manager.ui.LoginActivity"
+     android:fillViewport="true"
+     tools:context="com.robert.customer_manager.ui.login.LoginActivity"
      >
 
      <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +88,7 @@
         tools:ignore="RtlSymmetry" />
 
      <Button
-         android:id="@+id/login"
+         android:id="@+id/register"
          style="@style/Widget.AppCompat.Button"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -122,7 +124,7 @@
              app:layout_constraintEnd_toEndOf="parent"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintBottom_toBottomOf="parent"
-             app:layout_constraintTop_toBottomOf="@+id/login"
+             app:layout_constraintTop_toBottomOf="@+id/register"
              android:visibility="invisible"
              style="@style/Widget.AppCompat.ProgressBar"
              android:layout_marginTop="10dp"/>

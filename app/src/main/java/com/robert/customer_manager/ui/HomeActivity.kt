@@ -6,13 +6,30 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.robert.customer_manager.R
+import com.robert.customer_manager.session.Session
+import com.robert.customer_manager.ui.login.LoginActivity
+import com.robert.customer_manager.ui.login.UserViewModel
+import com.robert.customer_manager.ui.login.UserViewModelFactory
+import com.robert.customer_manager.ui.registration.RegisterStaff
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
+import org.kodein.di.android.kodein
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(),KodeinAware, Session {
+
+    override val kodein by kodein()
+    private lateinit var viewModel: UserViewModel
+    private val factory: UserViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        viewModel=ViewModelProviders.of(this,factory).get(UserViewModel::class.java)
+
+        viewModel.listener=this
 
         }
 
@@ -20,8 +37,12 @@ class HomeActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.register_customer ->{
                 val intent=Intent(this@HomeActivity,
-                    RegisterStaff::class.java)
-                startActivity(intent)
+                 RegisterStaff::class.java)
+                 startActivity(intent)
+            }
+
+            R.id.logout->{
+                 viewModel.logout()
             }
 
             else->Toast.makeText(this,"Thank you",Toast.LENGTH_SHORT).show()
@@ -35,7 +56,33 @@ class HomeActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onStarted() {
+        TODO("Not yet implemented")
     }
+
+    override fun onSuccess() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onEmpty() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFail() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLogout() {
+
+        val intent=Intent(this@HomeActivity,
+        LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+
+}
 
 
 
