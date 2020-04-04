@@ -11,7 +11,7 @@
     <string name="accountant_department">Accountant Department</string>
     <string name="it_center">IT Center</string>
     <string name="call_center">Call Center</string>
-    <string name="id">ID:</string>
+    <string name="Job">Job:</string>
     <string name="register">REGISTER</string>
     <string name="full_name">Full Name</string>
     <string name="department">Department</string>

@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.robert.customer_manager.R
+import com.robert.customer_manager.databinding.ActivityHomeBinding
 import com.robert.customer_manager.session.Session
 import com.robert.customer_manager.ui.login.LoginActivity
 import com.robert.customer_manager.ui.login.UserViewModel
@@ -23,15 +24,19 @@ class HomeActivity : AppCompatActivity(),KodeinAware, Session {
     private lateinit var viewModel: UserViewModel
     private val factory: UserViewModelFactory by instance()
 
+    private lateinit var binding:ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+       binding=DataBindingUtil.setContentView(this,R.layout.activity_home)
 
         viewModel=ViewModelProviders.of(this,factory).get(UserViewModel::class.java)
 
         viewModel.listener=this
 
         }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -45,7 +50,8 @@ class HomeActivity : AppCompatActivity(),KodeinAware, Session {
                  viewModel.logout()
             }
 
-            else->Toast.makeText(this,"Thank you",Toast.LENGTH_SHORT).show()
+            else->startActivity(Intent(this,
+                AllEmployees::class.java))
 
         }
         return super.onOptionsItemSelected(item)
@@ -57,19 +63,15 @@ class HomeActivity : AppCompatActivity(),KodeinAware, Session {
     }
 
     override fun onStarted() {
-        TODO("Not yet implemented")
     }
 
     override fun onSuccess() {
-        TODO("Not yet implemented")
     }
 
     override fun onEmpty() {
-        TODO("Not yet implemented")
     }
 
     override fun onFail() {
-        TODO("Not yet implemented")
     }
 
     override fun onLogout() {
@@ -79,6 +81,7 @@ class HomeActivity : AppCompatActivity(),KodeinAware, Session {
         startActivity(intent)
         finish()
     }
+
 
 
 

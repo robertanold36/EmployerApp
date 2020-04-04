@@ -45,7 +45,7 @@ class RegisterStaff : AppCompatActivity(),Session, KodeinAware{
         ArrayAdapter.createFromResource(this,R.array.departments,
             android.R.layout.simple_list_item_1).also {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.department.adapter=it
+            binding.myDepartment.adapter=it
 
         }
 
@@ -83,7 +83,7 @@ class RegisterStaff : AppCompatActivity(),Session, KodeinAware{
                         binding.email.text.toString(),
                         binding.name.text.toString(),
                         binding.job.selectedItem.toString(),
-                        binding.department.selectedItem.toString(),
+                        binding.myDepartment.selectedItem.toString(),
                         photoUri,
                         binding.endYear.text.toString()
                     )

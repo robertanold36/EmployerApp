@@ -4,6 +4,7 @@ import android.app.Application
 import com.robert.customer_manager.database.FirebaseSource
 import com.robert.customer_manager.ui.registration.RegisterViewModelFactory
 import com.robert.customer_manager.ui.login.UserViewModelFactory
+import com.robert.customer_manager.viewModel.GetAllEmployerViewFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -24,6 +25,10 @@ class BaseApplication1 : Application(), KodeinAware {
             RegisterViewModelFactory(
                 instance()
             )
+        }
+
+        bind() from provider {
+            GetAllEmployerViewFactory(instance())
         }
     }
 
