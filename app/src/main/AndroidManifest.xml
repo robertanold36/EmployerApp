@@ -13,13 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.AllEmployees"></activity>
+        <activity android:name=".ui.ChatActivity"></activity>
+        <activity android:name=".ui.AllEmployees" />
         <activity
             android:name=".ui.Congratulation"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".ui.registration.RegisterStaff"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.HomeActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
