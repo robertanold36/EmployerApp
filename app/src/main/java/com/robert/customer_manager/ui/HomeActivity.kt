@@ -40,11 +40,6 @@ class HomeActivity : AppCompatActivity(),KodeinAware, Session {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.register_customer ->{
-                val intent=Intent(this@HomeActivity,
-                 RegisterStaff::class.java)
-                 startActivity(intent)
-            }
 
             R.id.logout->{
                  viewModel.logout()

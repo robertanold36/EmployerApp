@@ -5,7 +5,8 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.messege_to.view.*
 
-class ChatToAdapter(val text:String):Item<ViewHolder>() {
+class ChatToAdapter(var text: String): Item<ViewHolder>() {
+
     override fun getLayout(): Int {
         return R.layout.messege_to
     }

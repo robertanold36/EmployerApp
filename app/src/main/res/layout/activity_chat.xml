@@ -15,6 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:paddingLeft="5dp"
         android:inputType="textPersonName"
         android:hint="type"
         app:layout_constraintBottom_toBottomOf="parent"

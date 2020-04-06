@@ -11,6 +11,7 @@ import com.robert.customer_manager.R
 import com.robert.customer_manager.databinding.ActivityLoginBinding
 import com.robert.customer_manager.session.Session
 import com.robert.customer_manager.ui.HomeActivity
+import com.robert.customer_manager.ui.registration.RegisterStaff
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 import org.kodein.di.android.kodein
@@ -43,6 +44,11 @@ class LoginActivity : AppCompatActivity(),Session, KodeinAware {
 
         viewModel.listener=this
 
+
+        binding.register.setOnClickListener {
+            val intent=Intent(this,RegisterStaff::class.java)
+            startActivity(intent)
+        }
 
     }
 

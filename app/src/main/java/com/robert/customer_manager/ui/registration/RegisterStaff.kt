@@ -90,6 +90,12 @@ class RegisterStaff : AppCompatActivity(),Session, KodeinAware{
                 }
             }
         }
+
+
+        binding.goToSign.setOnClickListener {
+            val intent=Intent(this,LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun imageSelecting(){

@@ -1,11 +1,15 @@
 package com.robert.customer_manager.adapter
 
+import android.content.Context
 import com.robert.customer_manager.R
+import com.robert.customer_manager.model.ChatModel
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.messege_from.view.*
 
-class ChatFromAdapter(val text:String):Item<ViewHolder>() {
+class ChatFromAdapter(var text:String):Item<ViewHolder>() {
+
+
     override fun getLayout(): Int {
         return R.layout.messege_from
     }

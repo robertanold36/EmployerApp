@@ -6,8 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.robert.customer_manager.model.ChatModel
 import com.robert.customer_manager.model.UserModel
+import com.robert.customer_manager.ui.ChatActivity
 import io.reactivex.Completable
+import java.util.*
 import kotlin.collections.HashMap
 
 class FirebaseSource{
@@ -20,17 +23,33 @@ class FirebaseSource{
     private val eMail:String="Email"
     private val userID:String="User_id"
     private val collectionPath="employer"
+    private val collectionPathChat:String="chats"
+    private val message:String="message"
+    private val receiver:String="Receiver ID"
+
+
+    private val msgID:String="chat ID"
+    private val sender:String="Sender ID"
+    private val cTime:String="Time"
+
+
 
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
+
     private var employees:MutableLiveData<MutableList<UserModel>> = MutableLiveData()
+    private var chatToText:MutableLiveData<MutableList<ChatModel>> = MutableLiveData()
+
+
 
     private val storage=FirebaseStorage.getInstance()
-    private val uid=FirebaseAuth.getInstance().uid?:""
-    private val ref=storage.getReference("image/$uid")
+    private val randomUid=UUID.randomUUID().toString()
+    private val ref=storage.getReference("image/$randomUid")
     private val firebaseStore=FirebaseFirestore.getInstance()
+
+
 
     fun login(email:String,password:String)= Completable.create { emitter ->
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
@@ -52,6 +71,7 @@ class FirebaseSource{
 
                     ref.putFile(imageUri).addOnSuccessListener {
 
+                        val uid=FirebaseAuth.getInstance().uid?:""
                         ref.downloadUrl.addOnSuccessListener {url->
                             val hashData=HashMap<String,Any>()
                             hashData[userID]=uid
@@ -65,7 +85,7 @@ class FirebaseSource{
                             firebaseStore.collection(collectionPath)
                                 .document(uid)
                                 .set(hashData)
-                                .addOnSuccessListener {
+                                .addOnCompleteListener {
                                 emitter.onComplete()
                             }
                         }
@@ -87,7 +107,6 @@ class FirebaseSource{
     fun getAllEmployee(department: String):LiveData<MutableList<UserModel>>{
         val set= mutableListOf<UserModel>()
         firebaseStore.collection(collectionPath).whereEqualTo(eDepartment,department).get().addOnSuccessListener {
-
 
                     for (document in it) {
 
@@ -118,6 +137,28 @@ class FirebaseSource{
         }
         return employees
 
+    }
+
+
+    fun loadMsg(userModel: UserModel){
+
+        val uid=FirebaseAuth.getInstance().uid?:""
+
+        firebaseStore.collection(collectionPathChat).
+        document(uid).
+        collection(message).
+        whereEqualTo(receiver,userModel.uid).get().addOnSuccessListener {
+
+            for(document in it){
+
+                val  chatID: String? =document.getString(msgID)
+                val  senderID: String? =document.getString(sender)
+                val  receiver: String? =document.getString(receiver)
+                val  msg: String? =document.getString(message)
+                val chatModel=ChatModel(chatID!!,senderID!!,receiver!!,msg!!)
+            }
+
+        }
     }
 
 }

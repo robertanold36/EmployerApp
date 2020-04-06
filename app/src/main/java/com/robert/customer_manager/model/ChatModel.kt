@@ -7,6 +7,9 @@ import kotlinx.android.parcel.Parcelize
 data class ChatModel(var chatID:String="",
                      var senderID:String="",
                      var receiverID:String="",
-                     var msg:String="",
-                     var time:String) :   Parcelable
+                     var msg:String="") :Parcelable{
+
+
+
+}
 
