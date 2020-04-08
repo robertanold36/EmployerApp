@@ -4,7 +4,6 @@ import android.app.Application
 import com.robert.customer_manager.database.FirebaseSource
 import com.robert.customer_manager.ui.registration.RegisterViewModelFactory
 import com.robert.customer_manager.ui.login.UserViewModelFactory
-import com.robert.customer_manager.viewModel.ChatViewModelFactory
 import com.robert.customer_manager.viewModel.GetAllEmployerViewFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -32,9 +31,6 @@ class BaseApplication1 : Application(), KodeinAware {
             GetAllEmployerViewFactory(instance())
         }
 
-        bind() from provider {
-            ChatViewModelFactory(instance())
-        }
     }
 
 }

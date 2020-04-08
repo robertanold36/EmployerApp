@@ -2,9 +2,13 @@ package com.robert.customer_manager.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.robert.customer_manager.R
 import com.robert.customer_manager.adapter.ChatFromAdapter
 import com.robert.customer_manager.adapter.ChatToAdapter
@@ -14,20 +18,12 @@ import com.robert.customer_manager.model.UserModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import java.util.*
-import kotlin.collections.HashMap
 
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
 class ChatActivity : AppCompatActivity(){
     private lateinit var binding:ActivityChatBinding
-    private val collectionPath:String="chats"
-    private val msgID:String="chat ID"
-    private val sender:String="Sender ID"
-    private val receiver:String="Receiver ID"
-    private val message:String="message"
-    private var firebaseStore:FirebaseFirestore?=null
-    private  val senderID=FirebaseAuth.getInstance().uid?:""
-
+    private  val senderId=FirebaseAuth.getInstance().uid?:""
 
 
     companion object{
@@ -40,7 +36,6 @@ class ChatActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_chat)
-        firebaseStore= FirebaseFirestore.getInstance()
 
 
         user=intent.getParcelableExtra("USER_KEY")
@@ -48,80 +43,66 @@ class ChatActivity : AppCompatActivity(){
 
         binding.chatRecyclerview.adapter=adapter
 
+        loadMsg()
+
         binding.send.setOnClickListener {
-            adapter.add(ChatToAdapter(binding.editText.text.toString()))
              sendMessage(binding.editText.text.toString())
              binding.editText.text.clear()
+            binding.chatRecyclerview.scrollToPosition(adapter.itemCount-1)
         }
 
-        loadSendMsg(user!!)
-        loadMsgReceived(user!!)
 
     }
 
-    private fun sendMessage(text:String){
+    private fun sendMessage(text: String) {
 
+        val receiverId= user?.uid
 
-           val chatID=UUID.randomUUID().toString()
-           val receiverID=user?.uid
+        val chatThings=ChatModel(senderId,receiverId!!,text,Calendar.getInstance().time.toString())
+        val reference=FirebaseDatabase.getInstance().getReference("/user/${senderId}/${receiverId}").push()
+        val toReference=FirebaseDatabase.getInstance().getReference("/user/${receiverId}/${senderId}").push()
 
-           val hashMap=HashMap<String,Any>()
-               hashMap[msgID]=chatID
-               hashMap[sender]= senderID
-               hashMap[receiver]=receiverID!!
-               hashMap[message]= text
-
-            firebaseStore?.collection(collectionPath)?.
-            document(senderID)?.
-            collection(message)?.
-            document(chatID)?.
-            set(hashMap)?.
-            addOnSuccessListener {
-
-            }
-    }
-
-
-    private fun loadSendMsg(userModel: UserModel){
-
-        firebaseStore?.collection(collectionPath)?.
-        document(senderID)?.
-        collection(message)?.
-        whereEqualTo(receiver,userModel.uid)?.get()?.addOnSuccessListener {
-
-            for(document in it){
-
-                val  chatID: String? =document.getString(msgID)
-                val  senderID: String? =document.getString(sender)
-                val  receiver: String? =document.getString(receiver)
-                val  msg: String? =document.getString(message)
-                val chatModel=ChatModel(chatID!!,senderID!!,receiver!!,msg!!)
-
-                adapter.add(ChatToAdapter(chatModel.msg))
-
-            }
-
-        }
-    }
-
-    private fun loadMsgReceived(userModel: UserModel){
-
-        firebaseStore?.collection(collectionPath)?.
-        document(userModel.uid)?.
-        collection(message)?.
-        whereEqualTo(receiver,senderID)?.get()?.addOnSuccessListener {
-            for (document in it){
-
-                val  chatID: String? =document.getString(msgID)
-                val  senderID: String? =document.getString(sender)
-                val  receiver: String? =document.getString(receiver)
-                val  msg: String? =document.getString(message)
-                val chatModel=ChatModel(chatID!!,senderID!!,receiver!!,msg!!)
-
-                adapter.add(ChatFromAdapter(chatModel.msg))
-            }
+        reference.setValue(chatThings).addOnSuccessListener {
+            Log.d("ChatActivity","message saved")
         }
 
+        toReference.setValue(chatThings)
+
+    }
+
+    private fun loadMsg(){
+
+        val receiverId= user?.uid
+
+        val reference=FirebaseDatabase.getInstance().getReference("/user/${senderId}/${receiverId}")
+        reference.addChildEventListener(object : ChildEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val chatModel=p0.getValue(ChatModel::class.java)
+                Log.d("ChatActivity",chatModel!!.msg)
+                if (chatModel.senderID!=FirebaseAuth.getInstance().uid){
+                    adapter.add(ChatFromAdapter(chatModel.msg))
+
+                }
+                else {
+                    adapter.add(ChatToAdapter(chatModel.msg))
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
+            }
+        })
     }
 
 }

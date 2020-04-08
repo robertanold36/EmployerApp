@@ -2,22 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:paddingTop="15dp"
     android:paddingLeft="10dp"
-    android:paddingTop="15dp">
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/msg_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/msg_from_style"
         android:maxWidth="300dp"
-        android:background="@drawable/messege_bg"
         android:padding="10dp"
-        android:textColor="@color/black"
-        android:text="poa"
+        android:text="mambo"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

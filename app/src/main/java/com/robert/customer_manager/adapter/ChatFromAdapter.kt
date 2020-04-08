@@ -7,14 +7,16 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.messege_from.view.*
 
-class ChatFromAdapter(var text:String):Item<ViewHolder>() {
-
+class ChatFromAdapter(private val text:String):Item<ViewHolder>() {
 
     override fun getLayout(): Int {
+
         return R.layout.messege_from
     }
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.msg_from.text=text
+         viewHolder.itemView.msg_from.text=text
     }
+
+
 }

@@ -1,13 +1,13 @@
 package com.robert.customer_manager.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import androidx.annotation.Keep
 
-@Parcelize
-data class ChatModel(var chatID:String="",
-                     var senderID:String="",
-                     var receiverID:String="",
-                     var msg:String="") :Parcelable{
+@Keep
+data class ChatModel(
+                      var senderID:String="",
+                      var receiverID:String="",
+                      var msg:String="",
+                      var time:String=""){
 
 
 

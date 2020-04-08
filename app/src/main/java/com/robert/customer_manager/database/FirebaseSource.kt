@@ -127,7 +127,10 @@ class FirebaseSource{
                             imageUrl!!,
                             endYear!!
                         )
-                        set.add(userModel)
+
+                        if(userModel.uid!=FirebaseAuth.getInstance().currentUser?.uid){
+                            set.add(userModel)
+                        }
                     }
                     employees.value=set
 
@@ -137,28 +140,6 @@ class FirebaseSource{
         }
         return employees
 
-    }
-
-
-    fun loadMsg(userModel: UserModel){
-
-        val uid=FirebaseAuth.getInstance().uid?:""
-
-        firebaseStore.collection(collectionPathChat).
-        document(uid).
-        collection(message).
-        whereEqualTo(receiver,userModel.uid).get().addOnSuccessListener {
-
-            for(document in it){
-
-                val  chatID: String? =document.getString(msgID)
-                val  senderID: String? =document.getString(sender)
-                val  receiver: String? =document.getString(receiver)
-                val  msg: String? =document.getString(message)
-                val chatModel=ChatModel(chatID!!,senderID!!,receiver!!,msg!!)
-            }
-
-        }
     }
 
 }
