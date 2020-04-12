@@ -3,6 +3,7 @@ package com.robert.customer_manager.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
@@ -37,6 +38,8 @@ class ChatActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_chat)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         user=intent.getParcelableExtra("USER_KEY")
         supportActionBar?.title=user!!.fullName
@@ -48,7 +51,7 @@ class ChatActivity : AppCompatActivity(){
         binding.send.setOnClickListener {
              sendMessage(binding.editText.text.toString())
              binding.editText.text.clear()
-            binding.chatRecyclerview.scrollToPosition(adapter.itemCount-1)
+             binding.chatRecyclerview.scrollToPosition(adapter.itemCount-1)
         }
 
 
@@ -56,25 +59,34 @@ class ChatActivity : AppCompatActivity(){
 
     private fun sendMessage(text: String) {
 
+
         val receiverId= user?.uid
 
         val chatThings=ChatModel(senderId,receiverId!!,text,Calendar.getInstance().time.toString())
         val reference=FirebaseDatabase.getInstance().getReference("/user/${senderId}/${receiverId}").push()
         val toReference=FirebaseDatabase.getInstance().getReference("/user/${receiverId}/${senderId}").push()
 
+        val latestReference=FirebaseDatabase.getInstance().getReference("/latest_message/${senderId}/${receiverId}")
+        val toLatestReference=FirebaseDatabase.getInstance().getReference("/latest_message/${receiverId}/${senderId}")
+
+
         reference.setValue(chatThings).addOnSuccessListener {
             Log.d("ChatActivity","message saved")
         }
 
         toReference.setValue(chatThings)
+        latestReference.setValue(chatThings)
+        toLatestReference.setValue(chatThings)
 
     }
 
     private fun loadMsg(){
 
+
         val receiverId= user?.uid
 
         val reference=FirebaseDatabase.getInstance().getReference("/user/${senderId}/${receiverId}")
+
         reference.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -97,6 +109,9 @@ class ChatActivity : AppCompatActivity(){
                 else {
                     adapter.add(ChatToAdapter(chatModel.msg))
                 }
+
+                binding.chatRecyclerview.scrollToPosition(adapter.itemCount-1)
+
             }
 
             override fun onChildRemoved(p0: DataSnapshot) {
@@ -104,6 +119,18 @@ class ChatActivity : AppCompatActivity(){
             }
         })
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home->{
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 
 }
 

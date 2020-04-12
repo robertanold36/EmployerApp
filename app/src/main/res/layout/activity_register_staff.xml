@@ -158,7 +158,7 @@
 
         <TextView
             android:id="@+id/textView6"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
 
         <TextView
             android:id="@+id/goToSign"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="@color/green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

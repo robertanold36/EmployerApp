@@ -1,5 +1,6 @@
 package com.robert.customer_manager.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import com.robert.customer_manager.model.UserModel
 import kotlinx.android.synthetic.main.all_employees.view.*
 
 
-class AllEmployeeAdapter (var context:Context):RecyclerView.Adapter<AllEmployeeAdapter.AllEmployeeViewHolder>(){
+class AllEmployeeAdapter (private val context:Context):RecyclerView.Adapter<AllEmployeeAdapter.AllEmployeeViewHolder>(){
 
     private var employeeDetails= mutableListOf<UserModel>()
 
@@ -54,13 +55,13 @@ class AllEmployeeAdapter (var context:Context):RecyclerView.Adapter<AllEmployeeA
         val userModel:UserModel=employeeDetails[position]
         holder.bindView(userModel)
 
-        holder.itemView.name.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val intent=Intent(context,
-            ChatActivity::class.java)
+                ChatActivity::class.java)
             intent.putExtra("USER_KEY",userModel)
             context.startActivity(intent)
+            (context as Activity).finish()
         }
-
     }
 
 }

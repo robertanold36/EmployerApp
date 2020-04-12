@@ -14,7 +14,6 @@
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      android:fillViewport="true"
-     tools:context="com.robert.customer_manager.ui.login.LoginActivity"
      >
 
      <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,22 +86,23 @@
         android:paddingStart="16dp"
         tools:ignore="RtlSymmetry" />
 
-     <Button
-         android:id="@+id/register_model"
-         style="@style/Widget.AppCompat.Button"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="44dp"
-         android:background="@drawable/bg_button"
-         android:ems="15"
-         android:text="@string/login"
-         android:onClick="@{() -> loginViewModel.login()}"
-         app:backgroundTint="@color/colorPrimary"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.9"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/password" />
+         <Button
+             android:id="@+id/register_model"
+             style="@style/Widget.AppCompat.Button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="44dp"
+             android:background="@drawable/bg_button"
+             android:ems="15"
+             android:onClick="@{() -> loginViewModel.login()}"
+             android:text="@string/login"
+             app:backgroundTint="@color/colorPrimary"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.9"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/password"
+             app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView3"
@@ -135,18 +135,18 @@
              android:layout_height="wrap_content"
              android:layout_marginStart="44dp"
              android:layout_marginLeft="44dp"
-             android:text="Dont Have An Account ?"
-             android:textSize="20sp"
+             android:text="Don't Have An Account ?"
              android:textColor="@color/black"
+             android:textSize="15sp"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toBottomOf="@+id/register_model"
-             app:layout_constraintVertical_bias="0.492" />
+             app:layout_constraintVertical_bias="0.493" />
 
          <TextView
              android:id="@+id/register"
              android:textColor="@color/green"
-             android:textSize="20sp"
+             android:textSize="15sp"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="register"
