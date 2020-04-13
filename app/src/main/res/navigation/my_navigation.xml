@@ -7,6 +7,6 @@
     app:startDestination="@id/newsFragment">
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.robert.customer_manager.ui.NewsFragment"
+        android:name="com.robert.customer_manager.ui.home.NewsFragment"
         android:label="NewsFragment" />
 </navigation>

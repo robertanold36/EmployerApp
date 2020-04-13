@@ -1,7 +1,9 @@
 package com.robert.customer_manager.ui.registration
 
 
+import android.app.Application
 import android.net.Uri
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.robert.customer_manager.database.FirebaseSource
 import com.robert.customer_manager.session.Session
@@ -12,7 +14,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val firebaseSource: FirebaseSource):ViewModel() {
+class RegisterViewModel(application: Application):AndroidViewModel(application) {
+
+    private val firebaseSource: FirebaseSource by lazy {
+        FirebaseSource()
+    }
 
     var session:Session?=null
     private val disposables=CompositeDisposable()

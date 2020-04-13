@@ -1,4 +1,4 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.robert.customer_manager.R
 
-class LatestMessageFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

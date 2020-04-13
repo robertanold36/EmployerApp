@@ -1,6 +1,7 @@
 package com.robert.customer_manager.ui.login
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import com.robert.customer_manager.database.FirebaseSource
 import com.robert.customer_manager.session.Session
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -8,8 +9,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class UserViewModel (private val firebaseSource: FirebaseSource):ViewModel() {
+class UserViewModel (application:Application):AndroidViewModel(application) {
 
+    private val firebaseSource: FirebaseSource by lazy {
+        FirebaseSource()
+    }
 
   var email:String?=""
   var password:String?=""

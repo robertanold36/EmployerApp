@@ -1,4 +1,4 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.chat
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +12,11 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
 import com.robert.customer_manager.R
 import com.robert.customer_manager.adapter.LatestMessageAdapter
+import com.robert.customer_manager.ui.allEmployee.AllEmployees
 import com.robert.customer_manager.databinding.ActivityLatestMessageBinding
 import com.robert.customer_manager.model.ChatModel
-import com.robert.customer_manager.model.UserModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 
@@ -28,6 +27,9 @@ class LatestMessage : AppCompatActivity() {
     private  val senderId= FirebaseAuth.getInstance().uid?:""
     private val latestMessageMap=HashMap<String,ChatModel>()
 
+    private val firebaseDatabase:FirebaseDatabase by lazy{
+        FirebaseDatabase.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +56,9 @@ class LatestMessage : AppCompatActivity() {
 
 
     private fun listenLatestMsg(){
-       val reference=FirebaseDatabase.getInstance().getReference("/latest_message/${senderId}")
+
+
+       val reference=firebaseDatabase.getReference("/latest_message/${senderId}")
 
         reference.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {

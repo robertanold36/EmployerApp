@@ -1,4 +1,4 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.robert.customer_manager.R
 import com.robert.customer_manager.databinding.FragmentDepartmentBinding
+import com.robert.customer_manager.ui.chat.LatestMessage
 
 
 class DepartmentFragment : Fragment() {

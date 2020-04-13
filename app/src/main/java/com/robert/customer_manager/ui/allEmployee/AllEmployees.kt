@@ -1,28 +1,22 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.allEmployee
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.robert.customer_manager.R
 import com.robert.customer_manager.adapter.AllEmployeeAdapter
 import com.robert.customer_manager.databinding.ActivityAllEmployeesBinding
-import com.robert.customer_manager.viewModel.GetAllEmployerViewFactory
-import com.robert.customer_manager.viewModel.GetAllEmployerViewModel
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-import org.kodein.di.android.kodein
 
 
-class AllEmployees : AppCompatActivity(),KodeinAware {
+class AllEmployees : AppCompatActivity() {
 
-    override val kodein by kodein()
-    private val factory:GetAllEmployerViewFactory by instance()
-    lateinit var viewModel: GetAllEmployerViewModel
+
+    private lateinit var viewModel: GetAllEmployerViewModel
 
     private var category:String?=null
 
@@ -40,7 +34,7 @@ class AllEmployees : AppCompatActivity(),KodeinAware {
 
         category=intent.getStringExtra("category")
 
-        viewModel=ViewModelProviders.of(this,factory).get(GetAllEmployerViewModel::class.java)
+        viewModel= ViewModelProvider(this).get(GetAllEmployerViewModel::class.java)
 
         adapter= AllEmployeeAdapter(this)
         binding.recyclerView.layoutManager=LinearLayoutManager(this)

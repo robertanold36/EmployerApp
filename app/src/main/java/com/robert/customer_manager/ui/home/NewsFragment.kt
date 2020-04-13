@@ -1,4 +1,4 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

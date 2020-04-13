@@ -2,7 +2,6 @@ package com.robert.customer_manager.ui.registration
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,22 +10,16 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.robert.customer_manager.R
 import com.robert.customer_manager.databinding.ActivityRegisterStaffBinding
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.generic.instance
 import com.robert.customer_manager.session.Session
 import com.robert.customer_manager.ui.Congratulation
-import com.robert.customer_manager.ui.HomeActivity
 import com.robert.customer_manager.ui.login.LoginActivity
 
 
-class RegisterStaff : AppCompatActivity(),Session, KodeinAware{
+class RegisterStaff : AppCompatActivity(),Session{
 
-    override val kodein by kodein()
-    private val factory: RegisterViewModelFactory by instance()
     private lateinit var binding:ActivityRegisterStaffBinding
     private val imageCode=100
     private lateinit var photoUri:Uri
@@ -37,7 +30,7 @@ class RegisterStaff : AppCompatActivity(),Session, KodeinAware{
         super.onCreate(savedInstanceState)
        binding=DataBindingUtil.setContentView(this,R.layout.activity_register_staff)
 
-       val  registerViewModel=ViewModelProviders.of(this,factory)
+       val  registerViewModel= ViewModelProvider(this)
            .get(RegisterViewModel::class.java)
 
         registerViewModel.session=this
@@ -130,16 +123,14 @@ class RegisterStaff : AppCompatActivity(),Session, KodeinAware{
         startActivity(intent)
     }
 
-    override fun onEmpty() {
-        TODO("Not yet implemented")
-    }
-
     override fun onFail() {
         binding.progressBar2.visibility= View.GONE
         Toast.makeText(this,"fail to register new Customer",Toast.LENGTH_SHORT).show()
     }
 
     override fun onLogout() {
-        TODO("Not yet implemented")
     }
+    override fun onEmpty() {
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.robert.customer_manager.R
+import com.robert.customer_manager.ui.home.HomeActivity
 
 class Congratulation : AppCompatActivity() {
 
@@ -14,7 +15,8 @@ class Congratulation : AppCompatActivity() {
 
         Handler().postDelayed(
             {
-                startActivity(Intent(this@Congratulation,HomeActivity::class.java))
+                startActivity(Intent(this@Congratulation,
+                    HomeActivity::class.java))
                 finish()
             },5000L
         )

@@ -3,11 +3,12 @@ package com.robert.customer_manager.adapter
 import android.content.Context
 import android.content.Intent
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.robert.customer_manager.R
 import com.robert.customer_manager.model.ChatModel
 import com.robert.customer_manager.model.UserModel
-import com.robert.customer_manager.ui.ChatActivity
+import com.robert.customer_manager.ui.chat.ChatActivity
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.layout_latest_message.view.*
@@ -34,7 +35,13 @@ class LatestMessageAdapter(private val chatModel: ChatModel,private val context:
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
-        firebaseStore.collection(collectionPath).document(chatModel.receiverID).get().
+        val receiverId:String = if(chatModel.senderID==FirebaseAuth.getInstance().uid){
+            chatModel.receiverID
+        } else {
+            chatModel.senderID
+        }
+
+        firebaseStore.collection(collectionPath).document(receiverId).get().
         addOnSuccessListener{
             val uid: String = it.getString(userID)!!
             val email: String =it.getString(eMail)!!

@@ -1,4 +1,4 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,26 +8,23 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.robert.customer_manager.R
 import com.robert.customer_manager.databinding.ActivityHomeBinding
 import com.robert.customer_manager.session.Session
 import com.robert.customer_manager.ui.login.LoginActivity
 import com.robert.customer_manager.ui.login.UserViewModel
-import com.robert.customer_manager.ui.login.UserViewModelFactory
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-import org.kodein.di.android.kodein
 
-class HomeActivity : AppCompatActivity(),KodeinAware, Session {
 
-    override val kodein by kodein()
+class HomeActivity : AppCompatActivity(),Session {
+
     private lateinit var viewModel: UserViewModel
-    private val factory: UserViewModelFactory by instance()
 
-    private val newsFragment=NewsFragment()
-    private val departmentFragment=DepartmentFragment()
-    private val messageFragment= LatestMessageFragment()
+    private val newsFragment= NewsFragment()
+    private val departmentFragment=
+        DepartmentFragment()
+    private val messageFragment=
+        ProfileFragment()
 
     private lateinit var binding:ActivityHomeBinding
 
@@ -35,7 +32,7 @@ class HomeActivity : AppCompatActivity(),KodeinAware, Session {
         super.onCreate(savedInstanceState)
        binding=DataBindingUtil.setContentView(this,R.layout.activity_home)
 
-        viewModel=ViewModelProviders.of(this,factory).get(UserViewModel::class.java)
+        viewModel= ViewModelProvider(this).get(UserViewModel::class.java)
 
         viewModel.listener=this
 

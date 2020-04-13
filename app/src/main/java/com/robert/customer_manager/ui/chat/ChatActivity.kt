@@ -1,4 +1,4 @@
-package com.robert.customer_manager.ui
+package com.robert.customer_manager.ui.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +26,10 @@ class ChatActivity : AppCompatActivity(){
     private lateinit var binding:ActivityChatBinding
     private  val senderId=FirebaseAuth.getInstance().uid?:""
 
+    private val firebaseDatabase:FirebaseDatabase by lazy{
+        FirebaseDatabase.getInstance()
+    }
+
 
     companion object{
         var user:UserModel?=null
@@ -41,8 +45,9 @@ class ChatActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        user=intent.getParcelableExtra("USER_KEY")
-        supportActionBar?.title=user!!.fullName
+        user =intent.getParcelableExtra("USER_KEY")
+        supportActionBar?.title=
+            user!!.fullName
 
         binding.chatRecyclerview.adapter=adapter
 
@@ -59,15 +64,14 @@ class ChatActivity : AppCompatActivity(){
 
     private fun sendMessage(text: String) {
 
-
         val receiverId= user?.uid
 
         val chatThings=ChatModel(senderId,receiverId!!,text,Calendar.getInstance().time.toString())
-        val reference=FirebaseDatabase.getInstance().getReference("/user/${senderId}/${receiverId}").push()
-        val toReference=FirebaseDatabase.getInstance().getReference("/user/${receiverId}/${senderId}").push()
+        val reference=firebaseDatabase.getReference("/user/${senderId}/${receiverId}").push()
+        val toReference=firebaseDatabase.getReference("/user/${receiverId}/${senderId}").push()
 
-        val latestReference=FirebaseDatabase.getInstance().getReference("/latest_message/${senderId}/${receiverId}")
-        val toLatestReference=FirebaseDatabase.getInstance().getReference("/latest_message/${receiverId}/${senderId}")
+        val latestReference=firebaseDatabase.getReference("/latest_message/${senderId}/${receiverId}")
+        val toLatestReference=firebaseDatabase.getReference("/latest_message/${receiverId}/${senderId}")
 
 
         reference.setValue(chatThings).addOnSuccessListener {
@@ -85,7 +89,7 @@ class ChatActivity : AppCompatActivity(){
 
         val receiverId= user?.uid
 
-        val reference=FirebaseDatabase.getInstance().getReference("/user/${senderId}/${receiverId}")
+        val reference=firebaseDatabase.getReference("/user/${senderId}/${receiverId}")
 
         reference.addChildEventListener(object : ChildEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -100,14 +104,14 @@ class ChatActivity : AppCompatActivity(){
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                val chatModel=p0.getValue(ChatModel::class.java)
-                Log.d("ChatActivity",chatModel!!.msg)
-                if (chatModel.senderID!=FirebaseAuth.getInstance().uid){
-                    adapter.add(ChatFromAdapter(chatModel.msg))
+                 chat=p0.getValue(ChatModel::class.java)
+                Log.d("ChatActivity", chat!!.msg)
+                if (chat!!.senderID!=FirebaseAuth.getInstance().uid){
+                    adapter.add(ChatFromAdapter(chat!!.msg))
 
                 }
                 else {
-                    adapter.add(ChatToAdapter(chatModel.msg))
+                    adapter.add(ChatToAdapter(chat!!.msg))
                 }
 
                 binding.chatRecyclerview.scrollToPosition(adapter.itemCount-1)

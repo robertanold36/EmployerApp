@@ -6,33 +6,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.robert.customer_manager.R
 import com.robert.customer_manager.databinding.ActivityLoginBinding
 import com.robert.customer_manager.session.Session
-import com.robert.customer_manager.ui.HomeActivity
+import com.robert.customer_manager.ui.home.HomeActivity
 import com.robert.customer_manager.ui.registration.RegisterStaff
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-import org.kodein.di.android.kodein
 
 
-class LoginActivity : AppCompatActivity(),Session, KodeinAware {
 
-
-    override val kodein by kodein()
-    private val factory: UserViewModelFactory by instance()
+class LoginActivity : AppCompatActivity(),Session {
 
     private lateinit var binding: ActivityLoginBinding
 
-    lateinit var viewModel: UserViewModel
+    private lateinit var viewModel: UserViewModel
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_login)
 
-        viewModel= ViewModelProviders.of(this,factory).get(UserViewModel::class.java)
+        viewModel= ViewModelProvider(this).get(UserViewModel::class.java)
 
         if(viewModel.user!=null){
 

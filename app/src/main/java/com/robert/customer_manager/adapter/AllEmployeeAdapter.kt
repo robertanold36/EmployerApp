@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.auth.User
-import com.robert.customer_manager.ui.ChatActivity
+import com.robert.customer_manager.ui.chat.ChatActivity
 import com.robert.customer_manager.R
 import com.robert.customer_manager.model.UserModel
 import kotlinx.android.synthetic.main.all_employees.view.*
